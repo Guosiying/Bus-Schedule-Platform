@@ -1,6 +1,7 @@
 package com.bus.busposition.controller;
 
 import com.bus.busposition.DTO.Position;
+import com.bus.busposition.message.MqSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,5 +19,7 @@ public class PositionController {
     public void sendPosition(@RequestBody Position position){
 
         log.info("x:"+position.getX()+";y:"+position.getY()+";time:"+position.getTime());
+        MqSender mqSender =new MqSender();
+        mqSender.send(position);
     }
 }
