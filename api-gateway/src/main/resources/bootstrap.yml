@@ -13,16 +13,4 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 server:
   port: 9000
-zuul:
-  add-host-header: true
-  retryable: false
-ribbon:
-  ReadTimeout: 5000
-  ConnectTimeout: 1000
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 9000
+
