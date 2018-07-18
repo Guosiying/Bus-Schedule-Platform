@@ -43,7 +43,7 @@ public class PositionController {
         amqpTemplate.convertAndSend("myQueue",positionstr);
 //        amqpTemplate.convertSendAndReceive("myQueue",positionstr);
         log.info(res);
-        String result="{\"result\":\"+res+\"}";
+        String result="{\"result\":\""+res+"\"}";
         return result;
     }
 
