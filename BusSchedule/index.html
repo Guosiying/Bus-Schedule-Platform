@@ -9,24 +9,24 @@
     <script src="js/bootstrap.min.js"></script>
     <style>
         #zone{
-            height: 500px;
-            width: 1000px;
-            background-color: #428bca;
+            height: 757px;
+            width: 800px;
+            background-image: url("img/zone.jpg");
         }
         #bus{
 
             height: 50px;
             width: 50px;
             position: absolute;
-            left: 10px;
+            left: 70px;
             top: 10px;
-            background-color: #fff;
+
         }
     </style>
 </head>
 <body>
 <div id="zone">
-    <div id="bus"><img src="img/bus.png" style="width: 50px;height: 50px"></div>
+    <div id="bus"><img class="img-rounded" src="img/bus.png" style="width: 50px;height: 50px"></div>
 </div>
 <script>
     var myDate = new Date();
@@ -90,11 +90,11 @@
                     // alert("你点击了右键");
                     // alert(box1.offsetLeft + 10 + "px");
                     //alert(bus.style.left);
-                    if(bus.offsetLeft<990)
+                    if(bus.offsetLeft<750)
                     bus.style.left = bus.offsetLeft + 10 + "px";/*图形右移*/
                     break;
                 case 40:
-                    if(bus.offsetTop<490)
+                    if(bus.offsetTop<700)
                     bus.style.top = bus.offsetTop+ 10+ "px";/*图形下移*/
                     break;
             }
@@ -117,7 +117,7 @@
             data:JSON.stringify(position),
             success:function(data,textStatus,jqXHR){
 
-                console.log(data.length)
+                
                 console.log('data:'+data)
                 console.log('textStatus'+textStatus)
                 console.log('jqXHR'+jqXHR)
