@@ -6,6 +6,8 @@ import com.bus.busposition.DTO.Position;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,8 @@ public class PositionController {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
+    String res = "";
+
     @PostMapping(value = "/sendposition")
     public String sendPosition(@RequestBody Position position) throws ParseException{
 
@@ -37,6 +41,13 @@ public class PositionController {
         JSONObject jsonObject = JSONObject.fromObject(position);
         log.info(jsonObject.toString());
         amqpTemplate.convertAndSend("myQueue",positionstr);
-        return "OK";
+//        amqpTemplate.convertSendAndReceive("myQueue",positionstr);
+        return res;
+    }
+
+    @RabbitListener(queuesToDeclare = @Queue("myQueue"))
+    public void setResult(String message)
+    {
+        res = message;
     }
 }
