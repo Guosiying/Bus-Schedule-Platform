@@ -14,6 +14,8 @@ public class Position {
 
     private Integer Y;
 
-    private Time time;
+    private String time;
+
+
 
 }

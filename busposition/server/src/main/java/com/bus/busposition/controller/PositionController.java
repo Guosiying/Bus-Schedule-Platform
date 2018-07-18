@@ -1,11 +1,18 @@
 package com.bus.busposition.controller;
 
 import com.bus.busposition.DTO.Position;
-import com.bus.busposition.message.MqSender;
+
+
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author zzy
@@ -15,11 +22,21 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PositionController {
 
-    @PostMapping(value = "/sendposition")
-    public void sendPosition(@RequestBody Position position){
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
-        log.info("x:"+position.getX()+";y:"+position.getY()+";time:"+position.getTime());
-        MqSender mqSender =new MqSender();
-        mqSender.send(position);
+    @PostMapping(value = "/sendposition")
+    public String sendPosition(@RequestBody Position position) throws ParseException{
+
+
+        //amqpTemplate.convertAndSend("myQueue",position);
+        String positionstr="x:"+position.getX()+";y:"+position.getY()+";time:"+position.getTime();
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+//        log.info(sdf.parse(position.getTime())+"");
+        JSONObject jsonObject = JSONObject.fromObject(position);
+        log.info(jsonObject.toString());
+        amqpTemplate.convertAndSend("myQueue",positionstr);
+        return "OK";
     }
 }
