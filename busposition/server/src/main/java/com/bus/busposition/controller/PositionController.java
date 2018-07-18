@@ -42,10 +42,12 @@ public class PositionController {
         log.info(jsonObject.toString());
         amqpTemplate.convertAndSend("myQueue",positionstr);
 //        amqpTemplate.convertSendAndReceive("myQueue",positionstr);
-        return res;
+        log.info(res);
+        String result="{\"result\":\"+res+\"}";
+        return result;
     }
 
-    @RabbitListener(queuesToDeclare = @Queue("myQueue"))
+    @RabbitListener(queuesToDeclare = @Queue("resultQueue"))
     public void setResult(String message)
     {
         res = message;
